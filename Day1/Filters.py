@@ -19,6 +19,8 @@ while True:
   if not ret:
     break
 
+  frame = cv.flip(frame, flipCode=1)
+
   if filter_mode=='gray':
     frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
   elif filter_mode == 'sepia':
@@ -42,5 +44,5 @@ while True:
 
 
 cap.release()
-cv.waitKey(0)
+# cv.waitKey(0)
 cv.destroyALLWindows()

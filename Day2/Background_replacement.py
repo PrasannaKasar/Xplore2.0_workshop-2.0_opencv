@@ -17,6 +17,8 @@ while cap.isOpened():
     if not ret:
         break
 
+    frame = cv2.flip(frame, flipCode=1)
+
     frame = cv2.resize(frame, (640, 480))
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
