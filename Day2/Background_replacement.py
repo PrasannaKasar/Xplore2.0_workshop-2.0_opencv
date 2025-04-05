@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 # Load background image
-bg_image = cv2.imread("beach.jpg")
+bg_image = cv2.imread("images/mountain.jpg")
 bg_image = cv2.resize(bg_image, (640, 480))
 
 # Initialize MediaPipe Selfie Segmentation

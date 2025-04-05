@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread('Xplore2.0/images/mona_lisa.jpg', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('images/mona_lisa.jpg', cv2.IMREAD_GRAYSCALE)
 cv2.imshow("Original Image", img)
  
 def nothing(x):
