@@ -1,7 +1,11 @@
+# face detection
+# TODO: Write your code here to draw a red circle in the middle of the face!
+
+cv2.circle(frame, (x+w // 2, y+h // 2), 20, (0, 0, 255), 2)
 
 
+#------------------------------------------------------------------------
 # Drawing_Shapes 
-
 # TODO 1: Draw a straight horizontal line using a for loop
 
 for x in range(70, 150): 
