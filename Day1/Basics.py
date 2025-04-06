@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # load image (use any image file in the same folder)
-image = cv2.imread('images/car.jpg')  
+image = cv2.imread('images/photo.jpg')  
 cv2.imshow('Original Image', image)
 
 # -------------------- IMAGE BASICS --------------------
