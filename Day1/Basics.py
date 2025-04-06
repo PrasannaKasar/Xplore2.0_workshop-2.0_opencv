@@ -24,7 +24,6 @@ cv2.imshow('Original Image', image)
 
 # # split image into blue, green, red channels
 # blue, green, red = cv2.split(image)
-
 # zeros = np.zeros_like(blue)
 
 # only_blue = cv2.merge([blue, zeros, zeros])
@@ -35,6 +34,7 @@ cv2.imshow('Original Image', image)
 
 # only_red = cv2.merge([zeros, zeros, red])
 # cv2.imshow("Red", only_red)
+
 
 # ------------------- BASIC OPERATIONS -------------------
 
@@ -52,6 +52,8 @@ cv2.imshow('Original Image', image)
 
 # # saving image
 # cv2.imwrite('flipped_image.jpg', flipped)
+
+#--------------------VIDEO PROCCESSING---------------------
 
 
 # Cleanup
