@@ -80,3 +80,62 @@ while cap.isOpened():
 
 cap.release()  
 cv2.destroyAllWindows()  
+
+
+#-------------------------------------TRY IT AT HOME------------------------------------------------
+
+#-------------------------------------USING MEDIAPIPE------------------------------------------------
+
+# import cv2
+# import mediapipe as mp
+# import numpy as np
+
+# # Step 1: Load your cool background image 
+# bg_image = cv2.imread("images/mountain.jpg")
+# bg_image = cv2.resize(bg_image, (640, 480)) 
+
+# # Step 2: Turn on your webcam
+# cap = cv2.VideoCapture(0)
+# if not cap.isOpened():
+#     print("Webcam not detected! Check if it's connected properly.")
+#     exit()
+
+# # Step 3: Initialize MediaPipe's Selfie Segmentation model
+# mp_selfie_segmentation = mp.solutions.selfie_segmentation
+# segmentor = mp_selfie_segmentation.SelfieSegmentation(model_selection=1)  # 0 = fast, 1 = accurate
+
+# # Step 4: Process webcam frames in a loop
+# while True:
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+
+#     frame = cv2.resize(frame, (640, 480))  
+#     frame = cv2.flip(frame, 1)  
+
+#     # Step 5: Convert to RGB (MediaPipe needs this)
+#     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+#     # Step 6: Get the segmentation mask (person vs. background)
+#     results = segmentor.process(rgb_frame)
+#     mask = results.segmentation_mask
+
+#     # Step 7: Create a binary condition mask — where the person is
+#     condition = mask > 0.5  # You can tweak this threshold for sharper detection
+
+#     # Step 8: Resize background to match the webcam frame
+#     bg_resized = cv2.resize(bg_image, (frame.shape[1], frame.shape[0]))
+
+#     # Step 9: Combine the person and the new background using the mask
+#     output_image = np.where(condition[..., None], frame, bg_resized)
+
+#     # Step 10: Show the final output
+#     cv2.imshow("Virtual Background (MediaPipe)", output_image)
+
+#     # Step 11: Press 'q' to quit
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+
+# # Cleanup
+# cap.release()
+# cv2.destroyAllWindows()
