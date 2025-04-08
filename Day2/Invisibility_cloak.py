@@ -8,11 +8,13 @@ time.sleep(2)
 
 # Capture the background
 print("Capturing background... Please move out of the frame.")
-for i in range(30):
+for i in range(100):
     ret, background = cap.read()
+    if not ret:
+        continue
 background = np.flip(background, axis=1)
 
-print("Done! Now hold up your red handkerchief.")
+print("Done! Now hold up your white paper.")
 
 while True:
     ret, frame = cap.read()
@@ -25,43 +27,37 @@ while True:
     # Convert frame to HSV color space
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # Define red color ranges (two ranges for HSV wrap-around)
-    lower_red1 = np.array([0, 120, 70])
-    upper_red1 = np.array([10, 255, 255])
-    lower_red2 = np.array([170, 120, 70])
-    upper_red2 = np.array([180, 255, 255])
+    # Define white color range in HSV
+    lower_white = np.array([0, 0, 200])
+    upper_white = np.array([180, 40, 255])
 
-    # Create masks for both red ranges
-    mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
-    mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+    # Create mask to detect white color
+    white_mask = cv2.inRange(hsv, lower_white, upper_white)
 
-    # Combine masks
-    red_mask = mask1 + mask2
-
-    # Clean up the mask
+    # Remove noise from the mask
     kernel = np.ones((5, 5), np.uint8)
-    red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel, iterations=2)
-    red_mask = cv2.dilate(red_mask, kernel, iterations=1)
+    white_mask = cv2.morphologyEx(white_mask, cv2.MORPH_OPEN, kernel, iterations=2)
+    white_mask = cv2.dilate(white_mask, kernel, iterations=1)
 
-    # Inverted mask for everything except red
-    mask_inv = cv2.bitwise_not(red_mask)
+    # Inverted mask to segment out non-white regions
+    mask_inv = cv2.bitwise_not(white_mask)
 
-    # Segment out non-red parts of the frame
+    # Segment out non-white parts from the frame
     res1 = cv2.bitwise_and(frame, frame, mask=mask_inv)
 
-    # Replace red parts with background
-    res2 = cv2.bitwise_and(background, background, mask=red_mask)
+    # Segment out the white parts from the saved background
+    res2 = cv2.bitwise_and(background, background, mask=white_mask)
 
-    # Combine both results
+    # Combine both results to get final output
     final_output = cv2.addWeighted(res1, 1, res2, 1, 0)
 
-    # Display
-    cv2.imshow("Invisibility Cloak - Red", final_output)
+    # Display the output
+    cv2.imshow("Invisibility Cloak - White", final_output)
 
     # Press 'q' to quit
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release and destroy
+# Release resources
 cap.release()
 cv2.destroyAllWindows()
